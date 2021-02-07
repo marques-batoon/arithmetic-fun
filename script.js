@@ -1,5 +1,8 @@
 var currentScore = 0;
 var highScore = 0;
+//var namae = prompt("Please enter a name for global ranking.");
+var namae = 'Marques';
+$('#welcomeMessage').html('Welcome ' + namae);
 var getRandomInt = function(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
