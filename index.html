@@ -14,9 +14,12 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 col-md-6">
+                    <button onclick="timerStart()" type="button" class="btn btn-dark">Play</button>
                     <div id="countdown" class="text-align-center">10 seconds</div>
                     <div id="mathExpression"><span id="num1"></span><span id="operator"></span><span id="num2"></span></div>
-                    <input type="number" id="userAnswer" class="form-control">
+                    <input type="number" id="userAnswer" class="form-control" disabled>
+                    <h3 id="score">Score: </h3>
+                    <h3 id="bestScore">Best Score: </h3>
                 </div>
             </div>
         </div>
