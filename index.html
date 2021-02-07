@@ -11,9 +11,9 @@
         <link href="styles.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid mt-3">
             <div class="row justify-content-center">
-                <div class="col-11 col-md-6">
+                <div class="col-12 col-md-6">
                     <p id="welcomeMessage">Welcome</p>
                     <button onclick="timerStart()" type="button" class="btn btn-dark">Play</button>
                     <div id="countdown" class="text-align-center">10 seconds</div>
@@ -21,6 +21,10 @@
                     <input type="number" id="userAnswer" class="form-control" disabled>
                     <h5 id="score">Score: </h5>
                     <h5 id="bestScore">Best Score: </h5>
+                    <h5 id="globalScore" class="mt-5 mb-3">Global High Scores: </h5>
+                    <div id="scoreHolder">
+                        <!-- <p class="gscore">TEST</p> -->
+                    </div>
                 </div>
             </div>
         </div>

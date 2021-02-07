@@ -1,5 +1,7 @@
-.gameHolder {
-    max-width: 500px;
+@media (min-width: 768px){
+    .gameHolder {
+        max-width: 500px;
+    }
 }
 
 #userAnswer {
