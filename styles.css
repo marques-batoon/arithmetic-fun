@@ -5,3 +5,12 @@
 #userAnswer {
     max-width: 50%;
 }
+
+#countdown {
+    font-size: 28px;
+}
+
+#mathExpression {
+    font-size: 36px;
+    font-weight: 600;
+}
