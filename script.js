@@ -4,7 +4,6 @@ var highScore = 0;
 //var namae = prompt("Please enter a name for global ranking.");
 var namae = 'Marques';
 $('#welcomeMessage').html('Welcome ' + namae);
-var scores = [];
 
 /* ADD SCORES
 $.ajax({
@@ -34,9 +33,22 @@ var updateScores = function() {
         success: function(response) {;
             taskList = response;
             for(var i = 0; i < response.tasks.length; i++){
-                //$('#scoreHolder').prepend($('<p class="gscore" id="' + response.tasks[i].id + '">' + response.tasks[i].content + '</p>'));
-                console.log(response.tasks[i]);
-                scores.unshift(response.tasks[i].content);
+                $('#scoreHolder').append($('<p class="gscore" id="' + response.tasks[i].id + '">' + response.tasks[i].content + '</p>'));
+                /*
+                if(i >= 1) {
+                    for(var mover = 1; mover <= i; mover++) {
+                        var curNum = (Number.parseInt(response.tasks[mover].content.substring(response.tasks[mover].content.lastIndexOf(' ')+1)));
+                        console.log(curNum);
+                        var prevNum = (Number.parseInt(response.tasks[mover-1].content.substring(response.tasks[mover].content.lastIndexOf(' ')+1)));
+                        console.log('prev num is ' + prevNum);
+                        if(curNum > prevNum) {
+                            $('#scoreHolder').children(mover).insertBefore($('#scoreHolder').children(mover-1));
+                            console.log("removing " + $('#scoreHolder').children(mover+1).html());
+                            $('#scoreHolder').children(mover+1).remove();
+                        }
+                    }
+                }
+                */
             }
         },
         error: function(request, errorMessage) {
@@ -44,14 +56,6 @@ var updateScores = function() {
         }
     });
 }
-console.log(scores);
-console.log(scores[1]);
-scores.sort( function(a, b) {
-    if( Math.parseInt(a.substring(a.lastIndexOf(" ") + 1)) >  Math.parseInt(b.substring(b.lastIndexOf(" ") + 1)) ) return 1;
-    if( Math.parseInt(a.substring(a.lastIndexOf(" ") + 1)) <  Math.parseInt(b.substring(b.lastIndexOf(" ") + 1)) ) return -1;
-    return 0;
-});
-console.log(scores);
 
 
 
@@ -74,6 +78,10 @@ var timerStart = function() {
     }
     timeleft -= 1;
     }, 1000);
+    currentScore = 0;
+    $('#score').html('Score: ' + currentScore);
+    timeleft = 10;
+    $('#countdown').html(timeleft + ' seconds remaining');
 }
 // ^^^ countdown function ^^^
 
