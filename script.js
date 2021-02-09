@@ -1,42 +1,49 @@
 // { success: true, id: 292 }
 var currentScore = 0;
 var highScore = 0;
-//var namae = prompt("Please enter a name for global ranking.");
-var namae = 'Marques';
+var globalHighScore;
+var namae = prompt("Please enter a name for global ranking.");
 $('#welcomeMessage').html('Welcome ' + namae);
 
 
 
-/* ADD SCORES
-$.ajax({
-    type: 'POST',
-    url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=292',
-    contentType: 'application/json',
-    dataType: 'json',
-    data: JSON.stringify({
-      task: {
-        content: "Test Boy: 5"
-      }
-    }),
-    success: function (response, textStatus) {
-      console.log(response);
-    },
-    error: function (request, textStatus, errorMessage) {
-      console.log(errorMessage);
-    }
-  });
-*/
+var addScore = function(scoreNum){
+    $.ajax({
+        type: 'POST',
+        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=292',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({
+        task: {
+            content: namae + ": " + scoreNum
+        }
+        }),
+        success: function (response, textStatus) {
+        console.log(response);
+        },
+        error: function (request, textStatus, errorMessage) {
+        console.log(errorMessage);
+        }
+    });
+}
 
-// TEST TEST
-//$('div.testHolder p:eq(3)').insertBefore('div.testHolder p:eq(0)');
-// TEST TEST
+var deleteScore = function(delId) {
+    $.ajax({
+        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks/' + delId + '?api_key=292',
+        type: 'DELETE',
+        success: function(result) {
+            console.log(result);
+        }
+    });
+}
 
 var updateScores = function() {
+    $('#scoreHolder').html('');
     $.ajax({
         type: 'GET',
         url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=292',
         dataType: 'json',
-        success: function(response) {;
+        success: function(response) {
             taskList = response;
             
             for(var i = 0; i < response.tasks.length; i++){
@@ -44,20 +51,26 @@ var updateScores = function() {
                 ///*
                 if(i >= 1) {
                     for(var mover = 1; mover <= i; mover++) {
-                        //var curNum = (Number.parseInt(response.tasks[mover].content.substring(response.tasks[mover].content.lastIndexOf(' ')+1)));
-                        
-                        //var prevNum = (Number.parseInt(response.tasks[mover-1].content.substring(response.tasks[mover].content.lastIndexOf(' ')+1)));
                         
                         strMover = mover.toString();
                         strMover1 = (mover - 1).toString();
 
 
                         var curNum = Number.parseInt(($('div#scoreHolder p:eq('+strMover+')').html()).substring(($('div#scoreHolder p:eq('+strMover+')').html()).lastIndexOf(' ')+1));
-                        console.log('current num is '+curNum);
                         var prevNum = Number.parseInt(($('div#scoreHolder p:eq('+strMover1+')').html()).substring(($('div#scoreHolder p:eq('+strMover1+')').html()).lastIndexOf(' ')+1));
-                        console.log('prev num is '+prevNum);
                         if(curNum > prevNum) {
-                            console.log('moving ' + curNum + ' before ' + prevNum);
+                            $('div#scoreHolder p:eq('+strMover+')').insertBefore('div#scoreHolder p:eq('+strMover1+')');
+                        }
+                        
+                    }
+                    for(var mover = i; mover >= 1; mover--) {
+                        strMover = mover.toString();
+                        strMover1 = (mover - 1).toString();
+
+
+                        var curNum = Number.parseInt(($('div#scoreHolder p:eq('+strMover+')').html()).substring(($('div#scoreHolder p:eq('+strMover+')').html()).lastIndexOf(' ')+1));
+                        var prevNum = Number.parseInt(($('div#scoreHolder p:eq('+strMover1+')').html()).substring(($('div#scoreHolder p:eq('+strMover1+')').html()).lastIndexOf(' ')+1));
+                        if(curNum > prevNum) {
                             $('div#scoreHolder p:eq('+strMover+')').insertBefore('div#scoreHolder p:eq('+strMover1+')');
                         }
                         
@@ -65,6 +78,8 @@ var updateScores = function() {
                 }
                 //*/
             }
+            globalHighScore = Number.parseInt(($('div#scoreHolder p:first-child').html()).substring(($('div#scoreHolder p:first-child').html()).lastIndexOf(' ')+1));
+            console.log(globalHighScore);
         },
         error: function(request, errorMessage) {
             console.log(errorMessage);
@@ -88,6 +103,19 @@ var timerStart = function() {
         timeleft = 10;
         document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
         $('#userAnswer').prop("disabled", true);
+        $('small').html('Scores are updated! You may have to reload to see the updated list');
+        if(globalHighScore){
+            if(currentScore > globalHighScore){
+                addScore(currentScore);
+                updateScores();
+                alert("Congratluations on getting the new high score!");
+            }
+        }
+        else if(currentScore > 10){
+            addScore(currentScore);
+            updateScores();
+            alert("You made it to the leaderboard!");
+        }
     } else {
         document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
     }

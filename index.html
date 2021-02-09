@@ -15,23 +15,16 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
                     <p id="welcomeMessage">Welcome</p>
-                    <button onclick="timerStart()" type="button" class="btn btn-dark">Play</button>
+                    <button onclick="timerStart(); updateScores();" type="button" class="btn btn-dark">Play</button>
                     <div id="countdown" class="text-align-center">10 seconds</div>
                     <div id="mathExpression"><span id="num1"></span><span id="operator"></span><span id="num2"></span></div>
                     <input type="number" id="userAnswer" class="form-control" disabled>
                     <h5 id="score" class="mt-3">Score: 0</h5>
                     <h5 id="bestScore">Best Score: 0</h5>
-                    <h5 id="globalScore" class="mt-5 mb-3">Global High Scores: </h5>
+                    <h5 id="globalScore" class="mt-5">Global High Scores: </h5>
+                    <p class="mb-4"><small>(Get above 10 to join the ranking)</small></p>
                     <div id="scoreHolder">
                         <!-- <p class="gscore">TEST</p> -->
-                    </div>
-                    <h5>Test</h5>
-                    <div class="testHolder">
-                        <p>Test 1</p>
-                        <p>Test 3</p>
-                        <p>Test 10</p>
-                        <p>Test 6</p>
-                        <p>Test test 5</p>
                     </div>
                 </div>
             </div>
