@@ -97,21 +97,23 @@ var getRandomInt = function(max) {
 var timeleft = 10;
 var timerStart = function() {
     $('#userAnswer').prop("disabled", false);
+    document.getElementById("userAnswer").focus();
     var downloadTimer = setInterval(function(){
     if(timeleft <= 0){
         clearInterval(downloadTimer);
         timeleft = 10;
         document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
         $('#userAnswer').prop("disabled", true);
-        $('small').html('Scores are updated! You may have to reload to see the updated list');
         if(globalHighScore){
             if(currentScore > globalHighScore){
                 addScore(currentScore);
                 updateScores();
+                $('small').html('Scores are updated! You may have to reload to see the updated list');
                 alert("Congratluations on getting the new high score!");
             }
         }
         else if(currentScore > 10){
+            $('small').html('Scores are updated! You may have to reload to see the updated list');
             addScore(currentScore);
             updateScores();
             alert("You made it to the leaderboard!");
