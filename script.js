@@ -92,7 +92,7 @@ var updateScores = function() {
 var getRandomInt = function(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
-
+//test
 // vvv countdown function vvv
 var timeleft = 10;
 var timerStart = function() {
