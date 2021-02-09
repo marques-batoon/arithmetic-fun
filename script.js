@@ -5,6 +5,8 @@ var highScore = 0;
 var namae = 'Marques';
 $('#welcomeMessage').html('Welcome ' + namae);
 
+
+
 /* ADD SCORES
 $.ajax({
     type: 'POST',
@@ -13,7 +15,7 @@ $.ajax({
     dataType: 'json',
     data: JSON.stringify({
       task: {
-        content: "Marques: 3"
+        content: "Test Boy: 5"
       }
     }),
     success: function (response, textStatus) {
@@ -25,6 +27,10 @@ $.ajax({
   });
 */
 
+// TEST TEST
+//$('div.testHolder p:eq(3)').insertBefore('div.testHolder p:eq(0)');
+// TEST TEST
+
 var updateScores = function() {
     $.ajax({
         type: 'GET',
@@ -32,23 +38,32 @@ var updateScores = function() {
         dataType: 'json',
         success: function(response) {;
             taskList = response;
+            
             for(var i = 0; i < response.tasks.length; i++){
                 $('#scoreHolder').append($('<p class="gscore" id="' + response.tasks[i].id + '">' + response.tasks[i].content + '</p>'));
-                /*
+                ///*
                 if(i >= 1) {
                     for(var mover = 1; mover <= i; mover++) {
-                        var curNum = (Number.parseInt(response.tasks[mover].content.substring(response.tasks[mover].content.lastIndexOf(' ')+1)));
-                        console.log(curNum);
-                        var prevNum = (Number.parseInt(response.tasks[mover-1].content.substring(response.tasks[mover].content.lastIndexOf(' ')+1)));
-                        console.log('prev num is ' + prevNum);
+                        //var curNum = (Number.parseInt(response.tasks[mover].content.substring(response.tasks[mover].content.lastIndexOf(' ')+1)));
+                        
+                        //var prevNum = (Number.parseInt(response.tasks[mover-1].content.substring(response.tasks[mover].content.lastIndexOf(' ')+1)));
+                        
+                        strMover = mover.toString();
+                        strMover1 = (mover - 1).toString();
+
+
+                        var curNum = Number.parseInt(($('div#scoreHolder p:eq('+strMover+')').html()).substring(($('div#scoreHolder p:eq('+strMover+')').html()).lastIndexOf(' ')+1));
+                        console.log('current num is '+curNum);
+                        var prevNum = Number.parseInt(($('div#scoreHolder p:eq('+strMover1+')').html()).substring(($('div#scoreHolder p:eq('+strMover1+')').html()).lastIndexOf(' ')+1));
+                        console.log('prev num is '+prevNum);
                         if(curNum > prevNum) {
-                            $('#scoreHolder').children(mover).insertBefore($('#scoreHolder').children(mover-1));
-                            console.log("removing " + $('#scoreHolder').children(mover+1).html());
-                            $('#scoreHolder').children(mover+1).remove();
+                            console.log('moving ' + curNum + ' before ' + prevNum);
+                            $('div#scoreHolder p:eq('+strMover+')').insertBefore('div#scoreHolder p:eq('+strMover1+')');
                         }
+                        
                     }
                 }
-                */
+                //*/
             }
         },
         error: function(request, errorMessage) {
