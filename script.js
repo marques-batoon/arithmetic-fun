@@ -161,7 +161,6 @@ window.addEventListener('keyup', function(e){
         }
     }
 });
-
 $(document).ready(function() {
     addition();
     updateScores();
