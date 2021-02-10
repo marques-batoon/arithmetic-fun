@@ -6,27 +6,6 @@ var namae = prompt("Please enter a name for global ranking.");
 $('#welcomeMessage').html('Welcome ' + namae);
 
 
-
-var addScore = function(scoreNum){
-    $.ajax({
-        type: 'POST',
-        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=292',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify({
-        task: {
-            content: namae + ": " + scoreNum
-        }
-        }),
-        success: function (response, textStatus) {
-        console.log(response);
-        },
-        error: function (request, textStatus, errorMessage) {
-        console.log(errorMessage);
-        }
-    });
-}
-
 var deleteScore = function(delId) {
     $.ajax({
         url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks/' + delId + '?api_key=292',
@@ -87,7 +66,25 @@ var updateScores = function() {
     });
 }
 
-
+var addScore = function(scoreNum){
+    $.ajax({
+        type: 'POST',
+        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=292',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({
+        task: {
+            content: namae + ": " + scoreNum
+        }
+        }),
+        success: function (response, textStatus) {
+            updateScores();
+        },
+        error: function (request, textStatus, errorMessage) {
+        console.log(errorMessage);
+        }
+    });
+}
 
 var getRandomInt = function(max) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -96,6 +93,8 @@ var getRandomInt = function(max) {
 // vvv countdown function vvv
 var timeleft = 10;
 var timerStart = function() {
+    $('img').fadeOut("fast");
+    $('button').prop("disabled", true);
     $('#userAnswer').prop("disabled", false);
     document.getElementById("userAnswer").focus();
     var downloadTimer = setInterval(function(){
@@ -104,20 +103,23 @@ var timerStart = function() {
         timeleft = 10;
         document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
         $('#userAnswer').prop("disabled", true);
-        if(globalHighScore){
-            if(currentScore > globalHighScore){
-                addScore(currentScore);
-                updateScores();
-                $('small').html('Scores are updated! You may have to reload to see the updated list');
-                alert("Congratluations on getting the new high score!");
-            }
+        $('button').prop("disabled", false);
+        if(currentScore > globalHighScore){
+            addScore(currentScore);
+            $('small').html('Nice Job!');
+            alert("Congratluations on getting the new high score!");
+            $('#tanuki').attr("src", "./pics/chouureshii.png");
         }
         else if(currentScore > 10){
-            $('small').html('Scores are updated! You may have to reload to see the updated list');
+            $('small').html('Nice Job!');
             addScore(currentScore);
-            updateScores();
             alert("You made it to the leaderboard!");
+            $('#tanuki').attr("src", "./pics/chouureshii.png");
         }
+        else if(currentScore > 1){
+            $('#tanuki').attr("src", "./pics/yatta.png");
+        }
+        $('img').fadeIn("slow");
     } else {
         document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
     }
