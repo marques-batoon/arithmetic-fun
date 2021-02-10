@@ -1,3 +1,14 @@
+body {
+    background-color:#e84a5f;
+    color: #2a363b;
+}
+
+#everything {
+    background-color: #ff847c;
+    position: relative;
+    border-radius: 10px 10px 0 10px;
+}
+
 @media (min-width: 768px){
     .gameHolder {
         max-width: 500px;
@@ -15,4 +26,34 @@
 #mathExpression {
     font-size: 36px;
     font-weight: 600;
+}
+
+#goodluck {
+    position: absolute;
+    right: 5%;
+    top: 15%;
+    width: 35%;
+}
+
+#tanuki {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    width: 35%;
+}
+
+@media (min-width: 1700px){
+    #goodluck {
+        position: absolute;
+        top: 10%;
+        right: 5%;
+        width: 30%;
+    }
+
+    #tanuki {
+        position: absolute;
+        right: 5%;
+        top: 45%;
+        width: 30%;
+    }
 }
