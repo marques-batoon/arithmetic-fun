@@ -29,21 +29,27 @@ body {
 }
 
 
-#tanuki {
+#imgContainer {
     position: absolute;
     right: 5%;
-    top: 14%;
+    top: 15%;
     width: 35%;
+}
+
+#tanuki {
+    width: 100%;
 }
 
 #goodluck {
-    position: absolute;
-    right: 5%;
-    top: 50%;
-    width: 35%;
+    width: 100%;
+    padding-top: 10%;
 }
-
+/*
 @media (max-width: 500px){
+    #imgContainer {
+
+    }
+
     #goodluck {
         position: absolute;
         right: 5%;
@@ -51,19 +57,20 @@ body {
         width: 35%;
     }
 }
-
+*/
 @media (min-width: 1700px){
-    #tanuki {
+    #imgContainer {
         position: absolute;
         top: 10%;
         right: 5%;
         width: 30%;
     }
 
+    #tanuki {
+        width: 100%;
+    }
+
     #goodluck {
-        position: absolute;
-        right: 5%;
-        top: 45%;
-        width: 30%;
+        width: 100%;
     }
 }
