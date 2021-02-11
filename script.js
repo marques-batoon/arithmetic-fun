@@ -2,6 +2,8 @@
 var currentScore = 0;
 var highScore = 0;
 var globalHighScore;
+var randInt1;
+var randInt2;
 var namae = prompt("Please enter a name for global ranking.");
 if(namae===null || namae===""){
     namae = "No Name Loser";
@@ -99,6 +101,7 @@ var timerStart = function() {
     $('img').fadeOut("fast");
     $('button').prop("disabled", true);
     $('#userAnswer').prop("disabled", false);
+    $('.form-check-input').prop("disabled", true);
     document.getElementById("userAnswer").focus();
     var downloadTimer = setInterval(function(){
     if(timeleft <= 0){
@@ -107,6 +110,7 @@ var timerStart = function() {
         document.getElementById("countdown").innerHTML = timeleft + " seconds left";
         $('#userAnswer').prop("disabled", true);
         $('button').prop("disabled", false);
+        $('.form-check-input').prop("disabled", false);
         if(currentScore > globalHighScore){
             addScore(currentScore);
             $('small').html('Nice Job!');
@@ -138,10 +142,10 @@ var timerStart = function() {
 }
 // ^^^ countdown function ^^^
 
-// Math function
+// Math functions
 var addition = function(){
-    var randInt1 = getRandomInt(99) + 1;
-    var randInt2 = getRandomInt(99) + 1;
+    randInt1 = getRandomInt(99) + 1;
+    randInt2 = getRandomInt(99) + 1;
     $('#num1').html(randInt1);
     $('#num2').html(randInt2);
     $('#operator').html(' + ');
@@ -149,22 +153,29 @@ var addition = function(){
 
 window.addEventListener('keyup', function(e){
     var answer = document.getElementById('userAnswer').value;
-    console.log(answer);
-    var randInt1 = $('#num1').html();
-    var randInt2 = $('#num2').html();
-    console.log(randInt1 + ' + ' + randInt2);
-    console.log(Number.parseInt(randInt1) + Number.parseInt(randInt2));
-    if((answer == Number.parseInt(randInt1) + Number.parseInt(randInt2))&&(timeleft>=0)){
-        addition();
-        timeleft+=2;
-        document.getElementById("countdown").innerHTML = timeleft + " seconds left";
-        $('#userAnswer').val('');
-        currentScore++;
-        $('#score').html('Score: ' + currentScore);
-        if(currentScore > highScore){
-            highScore = currentScore;
-            $('#bestScore').html('Best Score: ' + highScore);
+
+    if($('#addition').is(':checked')) {
+        if((answer == Number.parseInt(randInt1) + Number.parseInt(randInt2))&&(timeleft>=0)){
+            addition();
+            timeleft+=2;
+            document.getElementById("countdown").innerHTML = timeleft + " seconds left";
+            $('#userAnswer').val('');
+            currentScore++;
+            $('#score').html('Score: ' + currentScore);
+            if(currentScore > highScore){
+                highScore = currentScore;
+                $('#bestScore').html('Best Score: ' + highScore);
+            }
         }
+    }
+    else if($('#subtraction').is(':checked')) {
+
+    }
+    else if($('#multiplication').is(':checked')) {
+        
+    }
+    else if($('#division').is(':checked')) {
+        
     }
 });
 $(document).ready(function() {
