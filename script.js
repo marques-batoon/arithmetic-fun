@@ -2,16 +2,22 @@
 var currentScore = 0;
 var highScore = 0;
 var globalHighScore;
+var randInt1;
+var randInt2;
 var namae = prompt("Please enter a name for global ranking.");
+var apiAdd = 292;
+var apiSub = 295;
+var apiMult = 296;
+var apiDiv = 297;
 if(namae===null || namae===""){
     namae = "No Name Loser";
 }
 $('#welcomeMessage').html('Welcome ' + namae);
 
 
-var deleteScore = function(delId) {
+var deleteScore = function(delId, api) {
     $.ajax({
-        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks/' + delId + '?api_key=292',
+        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks/' + delId + '?api_key=' + api,
         type: 'DELETE',
         success: function(result) {
             console.log(result);
@@ -20,10 +26,23 @@ var deleteScore = function(delId) {
 }
 
 var updateScores = function() {
+    var api;
+    if($('#addition').is(':checked')){
+        api = apiAdd;
+    }
+    else  if($('#subtraction').is(':checked')){
+        api = apiSub;
+    }
+    else  if($('#multiplication').is(':checked')){
+        api = apiMult;
+    }
+    else  if($('#division').is(':checked')){
+        api = apiDiv;
+    }
     $('#scoreHolder').html('');
     $.ajax({
         type: 'GET',
-        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=292',
+        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=' + api,
         dataType: 'json',
         success: function(response) {
             taskList = response;
@@ -61,7 +80,7 @@ var updateScores = function() {
                 //*/
             }
             globalHighScore = Number.parseInt(($('div#scoreHolder p:first-child').html()).substring(($('div#scoreHolder p:first-child').html()).lastIndexOf(' ')+1));
-            console.log(globalHighScore);
+            console.log('Score to beat: ' + globalHighScore);
         },
         error: function(request, errorMessage) {
             console.log(errorMessage);
@@ -70,9 +89,22 @@ var updateScores = function() {
 }
 
 var addScore = function(scoreNum){
+    var api;
+    if($('#addition').is(':checked')){
+        api = apiAdd;
+    }
+    else  if($('#subtraction').is(':checked')){
+        api = apiSub;
+    }
+    else  if($('#multiplication').is(':checked')){
+        api = apiMult;
+    }
+    else  if($('#division').is(':checked')){
+        api = apiDiv;
+    }
     $.ajax({
         type: 'POST',
-        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=292',
+        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=' + api,
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify({
@@ -92,21 +124,90 @@ var addScore = function(scoreNum){
 var getRandomInt = function(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
-//test
+
+// Math functions
+var addition = function(){
+    randInt1 = getRandomInt(99) + 1;
+    randInt2 = getRandomInt(99) + 1;
+    $('#num1').html(randInt1);
+    $('#num2').html(randInt2);
+    $('#operator').html(' + ');
+}
+
+var subtraction = function(){
+    randInt1 = getRandomInt(88) + 12;
+    randInt2 = getRandomInt(randInt1 - 10) + 5;
+    $('#num1').html(randInt1);
+    $('#num2').html(randInt2);
+    $('#operator').html(' - ');
+}
+
+var multiplication = function() {
+    randInt1 = getRandomInt(14) + 2;
+    randInt2 = getRandomInt(14) + 2;
+    $('#num1').html(randInt1);
+    $('#num2').html(randInt2);
+    $('#operator').html(' * ');
+}
+
+var division = function() {
+    randInt1 = getRandomInt(190) + 10;
+    while( !((randInt1%13===0) || (randInt1%11===0) || (randInt1%7===0) || (randInt1%5===0) || (randInt1%3===0) || (randInt1%2===0))){
+        randInt1 = getRandomInt(190) + 10;
+    }
+    while(randInt1 % randInt2 !== 0) {
+        randInt2 = getRandomInt(randInt1 - 2) + 2;
+    }
+    $('#num1').html(randInt1);
+    $('#num2').html(randInt2);
+    $('#operator').html(' / ');
+}
+
+$('#addition').click(function(){
+    if(!($('#addition').is([disabled=""]))){
+        addition();
+        updateScores();
+    }
+});
+
+$('#subtraction').click(function(){
+    if(!($('#subtraction').is([disabled=""]))){
+        subtraction();
+        updateScores();
+    }
+});
+
+$('#multiplication').click(function(){
+    if(!($('#multiplication').is([disabled=""]))){
+        multiplication();
+        updateScores();
+    }
+});
+
+$('#division').click(function(){
+    if(!($('#division').is([disabled=""]))){
+        division();
+        updateScores();
+    }
+});
+
 // vvv countdown function vvv
 var timeleft = 10;
 var timerStart = function() {
     $('img').fadeOut("fast");
     $('button').prop("disabled", true);
     $('#userAnswer').prop("disabled", false);
+    $('.form-check-input').prop("disabled", true);
     document.getElementById("userAnswer").focus();
     var downloadTimer = setInterval(function(){
     if(timeleft <= 0){
         clearInterval(downloadTimer);
         timeleft = 10;
         document.getElementById("countdown").innerHTML = timeleft + " seconds left";
+        $('#userAnswer').val('');
         $('#userAnswer').prop("disabled", true);
         $('button').prop("disabled", false);
+        $('.form-check-input').prop("disabled", false);
         if(currentScore > globalHighScore){
             addScore(currentScore);
             $('small').html('Nice Job!');
@@ -138,32 +239,65 @@ var timerStart = function() {
 }
 // ^^^ countdown function ^^^
 
-// Math function
-var addition = function(){
-    var randInt1 = getRandomInt(99) + 1;
-    var randInt2 = getRandomInt(99) + 1;
-    $('#num1').html(randInt1);
-    $('#num2').html(randInt2);
-    $('#operator').html(' + ');
-}
+
 
 window.addEventListener('keyup', function(e){
     var answer = document.getElementById('userAnswer').value;
-    console.log(answer);
-    var randInt1 = $('#num1').html();
-    var randInt2 = $('#num2').html();
-    console.log(randInt1 + ' + ' + randInt2);
-    console.log(Number.parseInt(randInt1) + Number.parseInt(randInt2));
-    if((answer == Number.parseInt(randInt1) + Number.parseInt(randInt2))&&(timeleft>=0)){
-        addition();
-        timeleft+=2;
-        document.getElementById("countdown").innerHTML = timeleft + " seconds left";
-        $('#userAnswer').val('');
-        currentScore++;
-        $('#score').html('Score: ' + currentScore);
-        if(currentScore > highScore){
-            highScore = currentScore;
-            $('#bestScore').html('Best Score: ' + highScore);
+
+    if($('#addition').is(':checked')) {
+        if((answer == Number.parseInt(randInt1) + Number.parseInt(randInt2))&&(timeleft>=0)){
+            addition();
+            timeleft+=2;
+            document.getElementById("countdown").innerHTML = timeleft + " seconds left";
+            $('#userAnswer').val('');
+            currentScore++;
+            $('#score').html('Score: ' + currentScore);
+            if(currentScore > highScore){
+                highScore = currentScore;
+                $('#bestScore').html('Best Score: ' + highScore);
+            }
+        }
+    }
+    else if($('#subtraction').is(':checked')) {
+        if((answer == Number.parseInt(randInt1) - Number.parseInt(randInt2))&&(timeleft>=0)){
+            subtraction();
+            timeleft+=2;
+            document.getElementById("countdown").innerHTML = timeleft + " seconds left";
+            $('#userAnswer').val('');
+            currentScore++;
+            $('#score').html('Score: ' + currentScore);
+            if(currentScore > highScore){
+                highScore = currentScore;
+                $('#bestScore').html('Best Score: ' + highScore);
+            }
+        }
+    }
+    else if($('#multiplication').is(':checked')) {
+        if((answer == Number.parseInt(randInt1) * Number.parseInt(randInt2))&&(timeleft>=0)){
+            multiplication();
+            timeleft+=2;
+            document.getElementById("countdown").innerHTML = timeleft + " seconds left";
+            $('#userAnswer').val('');
+            currentScore++;
+            $('#score').html('Score: ' + currentScore);
+            if(currentScore > highScore){
+                highScore = currentScore;
+                $('#bestScore').html('Best Score: ' + highScore);
+            }
+        }
+    }
+    else if($('#division').is(':checked')) {
+        if((answer == Number.parseInt(randInt1) / Number.parseInt(randInt2))&&(timeleft>=0)){
+            division();
+            timeleft+=2;
+            document.getElementById("countdown").innerHTML = timeleft + " seconds left";
+            $('#userAnswer').val('');
+            currentScore++;
+            $('#score').html('Score: ' + currentScore);
+            if(currentScore > highScore){
+                highScore = currentScore;
+                $('#bestScore').html('Best Score: ' + highScore);
+            }
         }
     }
 });
