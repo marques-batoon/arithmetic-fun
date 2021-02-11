@@ -12,6 +12,9 @@ var apiDiv = 297;
 if(namae===null || namae===""){
     namae = "No Name Loser";
 }
+else if (namae.length > 15) {
+    namae = namae.substring(0, 15);
+}
 $('#welcomeMessage').html('Welcome ' + namae);
 
 
