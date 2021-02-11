@@ -3,6 +3,9 @@ var currentScore = 0;
 var highScore = 0;
 var globalHighScore;
 var namae = prompt("Please enter a name for global ranking.");
+if(namae===null || namae===""){
+    namae = "No Name Loser";
+}
 $('#welcomeMessage').html('Welcome ' + namae);
 
 
@@ -101,7 +104,7 @@ var timerStart = function() {
     if(timeleft <= 0){
         clearInterval(downloadTimer);
         timeleft = 10;
-        document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+        document.getElementById("countdown").innerHTML = timeleft + " seconds left";
         $('#userAnswer').prop("disabled", true);
         $('button').prop("disabled", false);
         if(currentScore > globalHighScore){
@@ -116,19 +119,22 @@ var timerStart = function() {
             alert("You made it to the leaderboard!");
             $('#tanuki').attr("src", "./pics/chouureshii.png");
         }
-        else if(currentScore > 1){
+        else if(currentScore < highScore){
+            $('#tanuki').attr("src", "./pics/akiramenaide.png");
+        }
+        else if(currentScore > 1) {
             $('#tanuki').attr("src", "./pics/yatta.png");
         }
         $('img').fadeIn("slow");
     } else {
-        document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+        document.getElementById("countdown").innerHTML = timeleft + " seconds left";
     }
     timeleft -= 1;
     }, 1000);
     currentScore = 0;
     $('#score').html('Score: ' + currentScore);
     timeleft = 10;
-    $('#countdown').html(timeleft + ' seconds remaining');
+    $('#countdown').html(timeleft + ' seconds left');
 }
 // ^^^ countdown function ^^^
 
@@ -151,7 +157,7 @@ window.addEventListener('keyup', function(e){
     if((answer == Number.parseInt(randInt1) + Number.parseInt(randInt2))&&(timeleft>=0)){
         addition();
         timeleft+=2;
-        document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+        document.getElementById("countdown").innerHTML = timeleft + " seconds left";
         $('#userAnswer').val('');
         currentScore++;
         $('#score').html('Score: ' + currentScore);
@@ -165,3 +171,4 @@ $(document).ready(function() {
     addition();
     updateScores();
 });
+
