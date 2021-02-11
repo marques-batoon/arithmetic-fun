@@ -170,6 +170,7 @@ $('#addition').click(function(){
     if(!($('#addition').is([disabled=""]))){
         addition();
         updateScores();
+        $('small').html('(Get above 10 to join the ranking)');
     }
 });
 
@@ -177,6 +178,7 @@ $('#subtraction').click(function(){
     if(!($('#subtraction').is([disabled=""]))){
         subtraction();
         updateScores();
+        $('small').html('(Get above 10 to join the ranking)');
     }
 });
 
@@ -184,6 +186,7 @@ $('#multiplication').click(function(){
     if(!($('#multiplication').is([disabled=""]))){
         multiplication();
         updateScores();
+        $('small').html('(Get above 10 to join the ranking)');
     }
 });
 
@@ -191,6 +194,7 @@ $('#division').click(function(){
     if(!($('#division').is([disabled=""]))){
         division();
         updateScores();
+        $('small').html('(Get above 10 to join the ranking)');
     }
 });
 
