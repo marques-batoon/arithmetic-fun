@@ -18,7 +18,7 @@ else if (namae.length > 15) {
 $('#welcomeMessage').html('Welcome ' + namae);
 
 
-var deleteScore = function(delId, api) {
+var deleteScore = function(delId, api) {    // Only accessible to coders
     $.ajax({
         url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks/' + delId + '?api_key=' + api,
         type: 'DELETE',
@@ -28,7 +28,7 @@ var deleteScore = function(delId, api) {
     });
 }
 
-var updateScores = function() {
+var updateScores = function() { 
     var api;
     if($('#addition').is(':checked')){
         api = apiAdd;
@@ -49,7 +49,7 @@ var updateScores = function() {
         dataType: 'json',
         success: function(response) {
             taskList = response;
-            
+            // Loop through all tasks (specific to math expression) and reorders them from largest to smallest
             for(var i = 0; i < response.tasks.length; i++){
                 $('#scoreHolder').append($('<p class="gscore" id="' + response.tasks[i].id + '">' + response.tasks[i].content + '</p>'));
                 ///*
@@ -91,7 +91,7 @@ var updateScores = function() {
     });
 }
 
-var addScore = function(scoreNum){
+var addScore = function(scoreNum){  // Adds new score when they get over 10
     var api;
     if($('#addition').is(':checked')){
         api = apiAdd;
