@@ -118,3 +118,15 @@ img:hover {
         width: 100%;
     }
 }
+
+footer {
+    transition: all 1s ease-in-out;
+}
+
+footer i {
+    color:aliceblue;
+    background-color: #2a363b;
+    padding: 2px 5px 5px 5px;
+    font-weight: 300;
+}
+
