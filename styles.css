@@ -101,3 +101,20 @@ img:hover {
         width: 100%;
     }
 }
+
+@media (min-width: 2050px) {
+    #imgContainer {
+        position: absolute;
+        top: 2%;
+        right: 5%;
+        width: 30%;
+    }
+
+    #tanuki {
+        width: 100%;
+    }
+
+    #goodluck {
+        width: 100%;
+    }
+}
