@@ -223,18 +223,22 @@ var timerStart = function() {
             $('small').html('Nice Job!');
             alert("Congratluations on getting the new high score!");
             $('#tanuki').attr("src", "./pics/chouureshii.png");
+            $('#goodluck').attr("src", "./pics/nice.png");
         }
         else if(currentScore > 10){
             $('small').html('Nice Job!');
             addScore(currentScore);
             alert("You made it to the leaderboard!");
             $('#tanuki').attr("src", "./pics/chouureshii.png");
+            $('#goodluck').attr("src", "./pics/nice.png");
         }
         else if(currentScore < highScore){
             $('#tanuki').attr("src", "./pics/akiramenaide.png");
+            $('#goodluck').attr("src", "./pics/goodluck.png");
         }
         else if(currentScore > 1) {
             $('#tanuki').attr("src", "./pics/yatta.png");
+            $('#goodluck').attr("src", "./pics/keepgoing.png");
         }
         $('img').fadeIn("slow");
     } else {
@@ -315,4 +319,3 @@ $(document).ready(function() {
     addition();
     updateScores();
 });
-
