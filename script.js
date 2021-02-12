@@ -160,6 +160,9 @@ var division = function() {
     }
     while(randInt1 % randInt2 !== 0) {
         randInt2 = getRandomInt(randInt1 - 2) + 2;
+        if(randInt1===randInt2){
+            division();
+        }
     }
     $('#num1').html(randInt1);
     $('#num2').html(randInt2);
