@@ -5,10 +5,10 @@ var globalHighScore;
 var randInt1;
 var randInt2;
 var namae = prompt("Please enter a name for global ranking.");
-var apiAdd = 292;
-var apiSub = 295;
-var apiMult = 296;
-var apiDiv = 297;
+var apiAdd = 200;
+var apiSub = 201;
+var apiMult = 202;
+var apiDiv = 203;
 if(namae===null || namae===""){
     namae = "No Name Loser";
 }
@@ -20,7 +20,7 @@ $('#welcomeMessage').html('Welcome ' + namae);
 
 var deleteScore = function(delId, api) {    // Only accessible to coders
     $.ajax({
-        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks/' + delId + '?api_key=' + api,
+        url: 'https://fewd-todolist-api.onrender.com/' + delId + '?api_key=' + api,
         type: 'DELETE',
         success: function(result) {
             console.log(result);
@@ -45,7 +45,7 @@ var updateScores = function() {
     $('#scoreHolder').html('');
     $.ajax({
         type: 'GET',
-        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=' + api,
+        url: 'https://fewd-todolist-api.onrender.com/tasks?api_key=' + api,
         dataType: 'json',
         success: function(response) {
             taskList = response;
@@ -107,7 +107,7 @@ var addScore = function(scoreNum){  // Adds new score when they get over 10
     }
     $.ajax({
         type: 'POST',
-        url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=' + api,
+        url: 'https://fewd-todolist-api.onrender.com/tasks?api_key=' + api,
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify({
